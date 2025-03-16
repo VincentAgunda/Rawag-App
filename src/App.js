@@ -12,6 +12,7 @@ import InvoiceDetails from "./pages/InvoiceDetails";
 import DeliveryNoteManagement from "./pages/DeliveryNoteManagement";
 import DeliveryNoteDetails from "./pages/DeliveryNoteDetails";
 import Settings from "./pages/Settings";
+import ThemeProvider from "./context/ThemeContext";
 
 // Page animation variants
 const pageVariants = {
@@ -50,15 +51,17 @@ const AnimatedRoutes = () => {
 
 function App() {
   return (
-    <Router>
-      <div className="flex flex-col min-h-screen">
-        <Header />
-        <main className="flex-grow container mx-auto p-4 relative">
-          <AnimatedRoutes />
-        </main>
-        <Footer />
-      </div>
-    </Router>
+    <ThemeProvider>
+      <Router>
+        <div className="flex flex-col min-h-screen bg-gray-100 dark:bg-gray-900 text-gray-900 dark:text-gray-100">
+          <Header />
+          <main className="flex-grow container mx-auto p-4 relative">
+            <AnimatedRoutes />
+          </main>
+          <Footer />
+        </div>
+      </Router>
+    </ThemeProvider>
   );
 }
 
