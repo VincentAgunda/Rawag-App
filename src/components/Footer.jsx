@@ -23,17 +23,17 @@ const Footer = () => {
   ];
 
   return (
-    <footer className="bg-[#102A4C] text-white py-10 w-full">
+    <footer className="bg-[#102A4C] text-white py-4 w-full">
       <div className="container mx-auto px-4">
         {/* Useful Links & Contact Us - Side by Side on Small Screens */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-8">
-          {/* Useful Links with Framer Motion */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          {/* Useful Links */}
           <div>
-            <h2 className="text-lg font-bold mb-4">Useful Links</h2>
-            <motion.ul initial="hidden" animate="visible" className="space-y-2">
+            <h2 className="text-base font-bold mb-2">Useful Links</h2>
+            <motion.ul initial="hidden" animate="visible" className="space-y-1">
               {links.map(({ path, label }, i) => (
                 <motion.li key={label} variants={linkVariants} custom={i}>
-                  <Link to={path} className="hover:underline">
+                  <Link to={path} className="hover:underline text-xs">
                     {label}
                   </Link>
                 </motion.li>
@@ -43,8 +43,8 @@ const Footer = () => {
 
           {/* Contact Us */}
           <div>
-            <h2 className="text-lg font-bold mb-4">Contact Us</h2>
-            <div className="space-y-3">
+            <h2 className="text-base font-bold mb-2">Contact Us</h2>
+            <div className="space-y-1 text-xs">
               <p className="flex items-center space-x-2">
                 📞 <span>0727 207 245, 0738 295 663</span>
               </p>
@@ -55,32 +55,32 @@ const Footer = () => {
           </div>
         </div>
 
-        {/* Social Links - Below Everything */}
-        <div className="mt-8 text-center">
-          <h2 className="text-lg font-bold mb-4">Follow Us</h2>
-          <div className="flex justify-center space-x-4">
+        {/* Social Links */}
+        <div className="mt-2 text-center">
+          <h2 className="text-base font-bold mb-3">Follow Us</h2>
+          <div className="flex justify-center space-x-2">
             {[FaFacebookF, FaTwitter, FaLinkedinIn, FaInstagram].map((Icon, index) => (
-              <a key={index} href="#" className="bg-white text-[#102A4C] p-2 rounded-full hover:bg-gray-200 transition">
-                <Icon className="w-5 h-5" />
+              <a key={index} href="#" className="bg-white text-[#102A4C] p-1 rounded-full hover:bg-gray-200 transition">
+                <Icon className="w-3 h-3" />
               </a>
             ))}
           </div>
         </div>
 
         {/* Email Subscription */}
-        <div className="mt-10 flex flex-col md:flex-row justify-center items-center space-y-4 md:space-y-0 md:space-x-4">
+        <div className="mt-4 flex flex-col md:flex-row justify-center items-center space-y-2 md:space-y-0 md:space-x-2">
           <input
             type="email"
             placeholder="ENTER YOUR EMAIL"
-            className="w-full md:w-96 px-4 py-3 rounded-full text-black focus:outline-none"
+            className="w-full md:w-64 px-3 py-1 rounded-full text-black text-xs focus:outline-none"
           />
-          <button className="bg-orange-500 px-6 py-3 rounded-full font-semibold hover:bg-orange-600 transition">
+          <button className="bg-orange-500 px-4 py-1 rounded-full text-xs font-semibold hover:bg-orange-600 transition">
             SUBSCRIBE
           </button>
         </div>
 
         {/* Copyright */}
-        <div className="text-center mt-10 text-sm">
+        <div className="text-center mt-4 text-xs">
           <p>&copy; 2025 Rawag Store. All Rights Reserved.</p>
         </div>
       </div>
