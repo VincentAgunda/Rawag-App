@@ -67,7 +67,7 @@ const LandingPage = () => {
         <div className="mt-10 grid grid-cols-1 md:grid-cols-3 gap-6 max-w-5xl mx-auto">
           {[
             { src: "/sweater1.jpg", name: "Classic Knit Sweater", price: "Ksh 490.99" },
-            { src: "/sweater2.jpg", name: "Chunky Winter Sweater", price: "Ksh 590.99" },
+            { src: "/sweater2.jpg", name: "Uniform set", price: "Ksh 1590.99" },
             { src: "/sweater3.jpg", name: "Minimalist Wool Sweater", price: "Ksh 540.99" },
           ].map(({ src, name, price }, index) => (
             <motion.div

@@ -9,6 +9,7 @@ const navLinks = [
   { path: "/add-product", label: "Add Product" },
   { path: "/invoices", label: "Invoices" },
   { path: "/delivery-notes", label: "Delivery Notes" },
+  { path: "/lpos", label: "LPOs" }, // Add LPOs link
   { path: "/settings", label: "Settings" },
 ];
 

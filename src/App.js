@@ -11,6 +11,8 @@ import InvoiceManagement from "./pages/InvoiceManagement";
 import InvoiceDetails from "./pages/InvoiceDetails";
 import DeliveryNoteManagement from "./pages/DeliveryNoteManagement";
 import DeliveryNoteDetails from "./pages/DeliveryNoteDetails";
+import LPOManagement from "./components/LPOManagement"; // Ensure this path is correct
+import LPODetails from "./components/LPODetails"; // Ensure this path is correct
 import Settings from "./pages/Settings";
 import ThemeProvider from "./context/ThemeContext";
 
@@ -42,6 +44,8 @@ const AnimatedRoutes = () => {
           <Route path="/invoice/:id" element={<InvoiceDetails />} />
           <Route path="/delivery-notes" element={<DeliveryNoteManagement />} />
           <Route path="/delivery-note/:id" element={<DeliveryNoteDetails />} />
+          <Route path="/lpos" element={<LPOManagement />} /> {/* LPO Management Route */}
+          <Route path="/lpo/:id" element={<LPODetails />} /> {/* LPO Details Route */}
           <Route path="/settings" element={<Settings />} />
         </Routes>
       </motion.div>

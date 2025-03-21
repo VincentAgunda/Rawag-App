@@ -1,15 +1,14 @@
 import React, { useState } from "react";
 import { db } from "../firebase/firebaseConfig";
-import { collection, addDoc, getDocs, query, where } from "firebase/firestore";
+import { collection, addDoc, getDocs } from "firebase/firestore";
 
-const InvoiceForm = ({ onClose, onInvoiceAdded }) => {
-  const [customerName, setCustomerName] = useState("");
-  const [date, setDate] = useState(""); // Invoice Date
+const LPOForm = ({ onClose, onLPOAdded }) => {
+  const [supplierName, setSupplierName] = useState("");
+  const [date, setDate] = useState("");
   const [items, setItems] = useState([{ description: "", size: "", quantity: 1, unitPrice: 0 }]);
-  const [deliveryNumber, setDeliveryNumber] = useState(""); // New state for delivery number
 
-  const generateInvoiceNumber = async () => {
-    const snapshot = await getDocs(collection(db, "invoices"));
+  const generateLPONumber = async () => {
+    const snapshot = await getDocs(collection(db, "lpos"));
     return snapshot.size + 1;
   };
 
@@ -17,33 +16,17 @@ const InvoiceForm = ({ onClose, onInvoiceAdded }) => {
     setItems([...items, { description: "", size: "", quantity: 1, unitPrice: 0 }]);
   };
 
-  // Fetch delivery note data and auto-fill items
-  const fetchDeliveryNoteData = async () => {
-    if (!deliveryNumber) return;
-
-    const q = query(collection(db, "deliveryNotes"), where("deliveryNoteNumber", "==", parseInt(deliveryNumber)));
-    const snapshot = await getDocs(q);
-
-    if (!snapshot.empty) {
-      const deliveryNoteData = snapshot.docs[0].data();
-      setItems(deliveryNoteData.items); // Auto-fill items from delivery note
-      setCustomerName(deliveryNoteData.customerName); // Auto-fill customer name
-    } else {
-      alert("Delivery Note not found!");
-    }
-  };
-
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const nextInvoiceNumber = await generateInvoiceNumber();
+    const nextLPONumber = await generateLPONumber();
 
     const subtotal = items.reduce((sum, item) => sum + item.quantity * item.unitPrice, 0);
     const tax = subtotal * 0.16;
     const totalAmount = subtotal + tax;
 
-    const docRef = await addDoc(collection(db, "invoices"), {
-      invoiceNumber: nextInvoiceNumber,
-      customerName,
+    const docRef = await addDoc(collection(db, "lpos"), {
+      lpoNumber: nextLPONumber,
+      supplierName,
       date,
       items,
       subtotal,
@@ -52,10 +35,10 @@ const InvoiceForm = ({ onClose, onInvoiceAdded }) => {
       status: "pending",
     });
 
-    onInvoiceAdded({
+    onLPOAdded({
       id: docRef.id,
-      invoiceNumber: nextInvoiceNumber,
-      customerName,
+      lpoNumber: nextLPONumber,
+      supplierName,
       date,
       items,
       subtotal,
@@ -77,29 +60,9 @@ const InvoiceForm = ({ onClose, onInvoiceAdded }) => {
         onSubmit={handleSubmit}
         className="bg-white p-4 rounded-lg shadow-md w-full max-w-md h-[70vh] overflow-y-auto"
       >
-        <h2 className="text-xl font-bold mb-4">New Invoice</h2>
+        <h2 className="text-xl font-bold mb-4">New LPO</h2>
 
-        {/* Delivery Number (Auto-fill trigger) */}
-        <label className="block font-medium">Delivery Note Number</label>
-        <div className="flex gap-2 mb-2">
-          <input
-            type="number"
-            placeholder="Enter Delivery Note Number"
-            value={deliveryNumber}
-            onChange={(e) => setDeliveryNumber(e.target.value)}
-            className="border p-2 w-full"
-          />
-          <button
-            type="button"
-            onClick={fetchDeliveryNoteData}
-            className="bg-blue-500 text-white px-4 py-2 rounded"
-          >
-            auto-populate
-          </button>
-        </div>
-
-        {/* Invoice Date */}
-        <label className="block font-medium">Invoice Date</label>
+        <label className="block font-medium">Date</label>
         <input
           type="date"
           value={date}
@@ -108,21 +71,18 @@ const InvoiceForm = ({ onClose, onInvoiceAdded }) => {
           className="border p-2 w-full mb-2"
         />
 
-        {/* Customer Name */}
-        <label className="block font-medium">Customer Name</label>
+        <label className="block font-medium">Supplier Name</label>
         <input
           type="text"
-          placeholder="Customer Name"
-          value={customerName}
-          onChange={(e) => setCustomerName(e.target.value)}
+          placeholder="Supplier Name"
+          value={supplierName}
+          onChange={(e) => setSupplierName(e.target.value)}
           required
           className="border p-2 w-full mb-2"
         />
 
-        {/* Items Section */}
         <h3 className="mt-4 font-bold">Items</h3>
 
-        {/* Column Labels */}
         <div className="grid grid-cols-4 gap-2 mt-2 font-medium text-gray-700">
           <span>Description</span>
           <span className="text-center">Size</span>
@@ -179,7 +139,6 @@ const InvoiceForm = ({ onClose, onInvoiceAdded }) => {
           </div>
         ))}
 
-        {/* Add Item Button */}
         <button
           type="button"
           onClick={addItem}
@@ -188,16 +147,15 @@ const InvoiceForm = ({ onClose, onInvoiceAdded }) => {
           + Add Item
         </button>
 
-        {/* Save Invoice Button */}
         <button
           type="submit"
           className="bg-blue-500 text-white px-4 py-2 mt-4 block w-full rounded"
         >
-          Save Invoice
+          Save LPO
         </button>
       </form>
     </div>
   );
 };
 
-export default InvoiceForm;
+export default LPOForm;

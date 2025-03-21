@@ -14,6 +14,7 @@ const EditProductModal = ({ product, onClose, onUpdate, onDelete }) => {
     sizes: "",
     date: null,
     status: "",
+    category: "",
   });
 
   const [isSaving, setIsSaving] = useState(false);
@@ -29,13 +30,14 @@ const EditProductModal = ({ product, onClose, onUpdate, onDelete }) => {
         sizes: product.sizes || "",
         date: product.date ? new Date(product.date) : null,
         status: product.status || "In Stock",
+        category: product.category || "Uncategorized",
       });
     }
   }, [product]);
 
   const handleClose = () => {
     setIsVisible(false);
-    setTimeout(onClose, 300);
+    onClose();
   };
 
   const handleSubmit = (e) => {
@@ -90,6 +92,11 @@ const EditProductModal = ({ product, onClose, onUpdate, onDelete }) => {
             exit={{ opacity: 0, scale: 0.9 }}
             transition={{ duration: 0.3 }}
           >
+            {/* Category Badge */}
+            <div className="absolute top-2 left-2 bg-blue-100 text-blue-800 text-xs font-semibold px-2.5 py-0.5 rounded">
+              {editedProduct.category}
+            </div>
+
             <h2 className="text-lg font-bold mb-4">Edit Product</h2>
             <form onSubmit={handleSubmit} className="space-y-3">
               {/* Name */}
@@ -101,7 +108,7 @@ const EditProductModal = ({ product, onClose, onUpdate, onDelete }) => {
                   onChange={(e) => 
                     setEditedProduct((prev) => ({ ...prev, name: e.target.value }))
                   }
-                  className="mt-1 block w-full p-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500"
+                  className="mt-1 block w-full p-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 truncate"
                   required
                 />
               </div>
@@ -231,6 +238,13 @@ const EditProductModal = ({ product, onClose, onUpdate, onDelete }) => {
       )}
     </AnimatePresence>
   );
+};
+
+EditProductModal.propTypes = {
+  product: PropTypes.object.isRequired,
+  onClose: PropTypes.func.isRequired,
+  onUpdate: PropTypes.func.isRequired,
+  onDelete: PropTypes.func.isRequired,
 };
 
 export default EditProductModal;
